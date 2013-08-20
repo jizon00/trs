@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
 		
 		mContext = this;
 
+		
 		findViewById(R.id.button1).setOnClickListener(clickListener);
 		findViewById(R.id.button2).setOnClickListener(clickListener);
 		findViewById(R.id.button3).setOnClickListener(clickListener);
