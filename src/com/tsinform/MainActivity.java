@@ -10,23 +10,21 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	
-	OnClickListener clickListener = new MainClickListener();
-	private Context mContext;
+	private OnClickListener mClickListener = new MainClickListener();
+	private Context 		mContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		mContext = this;
 
-		
-		findViewById(R.id.button1).setOnClickListener(clickListener);
-		findViewById(R.id.button2).setOnClickListener(clickListener);
-		findViewById(R.id.button3).setOnClickListener(clickListener);
-		findViewById(R.id.button4).setOnClickListener(clickListener);
-		findViewById(R.id.button5).setOnClickListener(clickListener);
+		setClickListener(R.id.button1);
+		setClickListener(R.id.button2);
+		setClickListener(R.id.button3);
+		setClickListener(R.id.button4);
+		setClickListener(R.id.button5);
 	}
 
 	@Override
@@ -36,44 +34,50 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	private void setClickListener(int rid) {
+		findViewById(rid).setOnClickListener(mClickListener);
+	}
+
 	class MainClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			String msg = "";
-			switch (v.getId()) {
-			case R.id.button1: {
+			Intent 	intent		= new Intent();
+			int 	viewId 		= v.getId();
+			String 	pageName 	= "";
+
+			switch (viewId) {
+			case R.id.button1: 
 				// 교통정보API
-				msg = "교통정보API";
-				Toast.makeText(getApplicationContext(), String.format("%s", msg), Toast.LENGTH_SHORT).show();
-			}
+				pageName = "교통정보API";
 				break;
-			case R.id.button2:{
+			case R.id.button2:
 				// 구글맵API
-				msg = "구글맵API";
-				Toast.makeText(getApplicationContext(), String.format("%s", msg), Toast.LENGTH_SHORT).show();
-			}
+				pageName = "구글맵API";
 				break;
-			case R.id.button3: {
+			case R.id.button3: 
 				// 페이스북API
-				msg = "페이스북API";
-				Toast.makeText(getApplicationContext(), String.format("%s", msg), Toast.LENGTH_SHORT).show();
-			}
-				break;
-			case R.id.button4: {
-				// DataBase
-				msg = "DataBase";
-				Toast.makeText(getApplicationContext(), String.format("%s", msg), Toast.LENGTH_SHORT).show();
-			}
-				break;
-			case R.id.button5: {
-				// Activity
-				Intent intent = new Intent(mContext, Activity1.class);
-//				Intent intent = new Intent(MainActivity.this, cls)
+				pageName = "페이스북API";
+				intent.setClass(mContext, FacebookActivity.class);
 				startActivity(intent);
-			}
+				break;
+			case R.id.button4: 
+				// DataBase
+				pageName = "DataBase";
+				break;
+			case R.id.button5: 
+				// Activity Sample
+				pageName = "Sample Page";
+				intent.setClass(mContext, SampleActivity.class);
+				startActivity(intent);
 				break;
 			}
-			
+
+			String message = String.format("Activity:%s", pageName);
+			showToast(message);
+		}
+
+		private void showToast(String message) {
+			Toast.makeText(mContext, String.format("%s", message), Toast.LENGTH_SHORT).show();
 		}
 	}
 }
