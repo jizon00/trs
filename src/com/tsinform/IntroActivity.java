@@ -16,6 +16,8 @@ public class IntroActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_intro);
 		
+		String a = "";
+		
 		mContext = this;
 		
 		mHnd = new Handler();
